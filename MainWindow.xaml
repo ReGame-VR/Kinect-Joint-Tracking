@@ -40,5 +40,9 @@
         <Button x:Name="button2" HorizontalAlignment="Left" Height="26" Margin="322,448.333,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Click="EndClick">End
         </Button>
 
+        <TextBox x:Name="idBox" HorizontalAlignment="Left" Height="26" Margin="102,448.333,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75" TextChanged="UpdateID">
+            ID
+        </TextBox>
+
     </Grid>
 </Window>

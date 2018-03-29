@@ -150,9 +150,9 @@ namespace Microsoft.Samples.Kinect.BodyBasics
         // C:\\Sample\\KinectData.txt
         private String dir = "C:\\Users\\Rehabilitation Games\\Desktop\\KinectJointTracking\\KinectSDKData";
 
-        private String file = "MurrayTesting"; // Enter file name (.txt will automatically be appended)
+        private String file = "Tracking"; // First part of file name
 
-        private String ID = "Murray"; // Enter ID into quotation marks, i.e. "1a675"
+        private String ID = "DefaultID"; // ID - will be updated by UI text box
 
         public Boolean dateFlag = false;
 
@@ -717,6 +717,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             }
         }
 
+        // Method that fires whenever a key is released
         private void KeyUpHandler(object sender, KeyEventArgs e)
         {
             if (started)
@@ -734,6 +735,12 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                     this.Title = "Recording - Press O to start marking";
                 }
             }           
+        }
+
+        // updates the participant ID to match what is entered into the UI textbox
+        private void UpdateID(object sender, RoutedEventArgs e)
+        {
+            ID = idBox.Text;
         }
         // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
