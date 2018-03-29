@@ -1,0 +1,228 @@
+function varargout = JointsGUI(varargin)
+% JOINTSGUI MATLAB code for JointsGUI.fig
+%      JOINTSGUI, by itself, creates a new JOINTSGUI or raises the existing
+%      singleton*.
+%
+%      H = JOINTSGUI returns the handle to a new JOINTSGUI or the handle to
+%      the existing singleton*.
+%
+%      JOINTSGUI('CALLBACK',hObject,eventData,handles,...) calls the local
+%      function named CALLBACK in JOINTSGUI.M with the given input arguments.
+%
+%      JOINTSGUI('Property','Value',...) creates a new JOINTSGUI or raises the
+%      existing singleton*.  Starting from the left, property value pairs are
+%      applied to the GUI before JointsGUI_OpeningFcn gets called.  An
+%      unrecognized property name or invalid value makes property application
+%      stop.  All inputs are passed to JointsGUI_OpeningFcn via varargin.
+%
+%      *See GUI Options on GUIDE's Tools menu.  Choose "GUI allows only one
+%      instance to run (singleton)".
+%
+% See also: GUIDE, GUIDATA, GUIHANDLES
+
+% Edit the above text to modify the response to help JointsGUI
+
+% Last Modified by GUIDE v2.5 08-Aug-2016 23:39:51
+
+% Begin initialization code - DO NOT EDIT
+gui_Singleton = 1;
+gui_State = struct('gui_Name',       mfilename, ...
+                   'gui_Singleton',  gui_Singleton, ...
+                   'gui_OpeningFcn', @JointsGUI_OpeningFcn, ...
+                   'gui_OutputFcn',  @JointsGUI_OutputFcn, ...
+                   'gui_LayoutFcn',  [] , ...
+                   'gui_Callback',   []);
+if nargin && ischar(varargin{1})
+    gui_State.gui_Callback = str2func(varargin{1});
+end
+
+if nargout
+    [varargout{1:nargout}] = gui_mainfcn(gui_State, varargin{:});
+else
+    gui_mainfcn(gui_State, varargin{:});
+end
+% End initialization code - DO NOT EDIT
+
+
+% --- Executes just before JointsGUI is made visible.
+function JointsGUI_OpeningFcn(hObject, eventdata, handles, varargin)
+% This function has no output args, see OutputFcn.
+% hObject    handle to figure
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+% varargin   command line arguments to JointsGUI (see VARARGIN)
+
+% Choose default command line output for JointsGUI
+handles.output = hObject;
+
+% Update handles structure
+guidata(hObject, handles);
+global currdir
+currdir = pwd;
+set(handles.subjname,'string','');
+
+% UIWAIT makes JointsGUI wait for user response (see UIRESUME)
+% uiwait(handles.figure1);
+
+
+% --- Outputs from this function are returned to the command line.
+function varargout = JointsGUI_OutputFcn(hObject, eventdata, handles) 
+% varargout  cell array for returning output args (see VARARGOUT);
+% hObject    handle to figure
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Get default command line output from handles structure
+varargout{1} = handles.output;
+
+
+% --- Executes on button press in fileselection.
+function fileselection_Callback(hObject, eventdata, handles)
+% hObject    handle to fileselection (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+global FileName PathName currdir x y z
+[FileName,PathName] = uigetfile('*.txt','Select the Data file');
+[x,y,z] = dataClean(FileName,PathName,currdir);
+cd(currdir);
+set(handles.subjname,'string',FileName(1:end-4));
+
+% --- Executes on selection change in lists.
+function lists_Callback(hObject, eventdata, handles)
+% hObject    handle to lists (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: contents = cellstr(get(hObject,'String')) returns lists contents as cell array
+%        contents{get(hObject,'Value')} returns selected item from lists
+global joint
+joint = get(hObject,'Value');
+
+% --- Executes during object creation, after setting all properties.
+function lists_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to lists (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: listbox controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+% --- Executes on button press in xyaxis.
+function xyaxis_Callback(hObject, eventdata, handles)
+% hObject    handle to xyaxis (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of xyaxis
+
+
+% --- Executes on button press in yzaxis.
+function yzaxis_Callback(hObject, eventdata, handles)
+% hObject    handle to yzaxis (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of yzaxis
+
+
+% --- Executes on button press in zxaxis.
+function zxaxis_Callback(hObject, eventdata, handles)
+% hObject    handle to zxaxis (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of zxaxis
+
+
+% --- Executes on button press in xyzaxis.
+function xyzaxis_Callback(hObject, eventdata, handles)
+% hObject    handle to xyzaxis (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of xyzaxis
+
+
+% --- Executes on button press in plotting.
+function plotting_Callback(hObject, eventdata, handles)
+% hObject    handle to plotting (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+global x y z joint
+xyhandle = get(handles.xyaxis,'Value');
+yzhandle = get(handles.yzaxis,'Value');
+zxhandle = get(handles.zxaxis,'Value');
+xyzhandle = get(handles.xyzaxis,'Value');
+
+titleNames = {'Head','Neck','Spine Base','Spine Mid','Spine Shoulder',...
+    'Shoulder Right','Shoulder Left','Elbow Right','Elbow Left','Wrist Right'...
+    'Wrist Left','Hand Right','Hand Left','Thumb Right','Thumb Left',...
+    'Handtip Right','Handtip Left','Knee Right','Knee Left','Ankle Right',...
+    'Ankle Left','Foot Right'};
+
+if xyhandle == 1
+    figure;
+    plot(x(:,joint),y(:,joint)); grid on; grid minor;
+    title(strcat('XY 2D plot: ',titleNames{joint}));
+    xlabel('X axis'); ylabel('Y axis');
+end
+
+if yzhandle == 1
+    figure;
+    plot(y(:,joint),z(:,joint)); grid on; grid minor;
+    title(strcat('YZ 2D plot: ',titleNames{joint}));
+    xlabel('Y axis'); ylabel('Z axis');
+end
+
+if zxhandle == 1
+    figure;
+    plot(z(:,joint),x(:,joint)); grid on; grid minor;
+    title(strcat('ZX 2D plot: ',titleNames{joint}));
+    xlabel('Z axis'); ylabel('X axis');
+end
+
+if xyzhandle == 1
+    figure;
+    plot3(x(:,joint),y(:,joint),z(:,joint)); grid on; grid minor;
+    title(strcat('XYZ 3D plot: ',titleNames{joint}));
+    xlabel('X axis'); ylabel('Y axis'); zlabel('Z axis');
+end
+
+
+
+function subjname_Callback(hObject, eventdata, handles)
+% hObject    handle to subjname (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of subjname as text
+%        str2double(get(hObject,'String')) returns contents of subjname as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function subjname_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to subjname (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+% --- Executes on button press in helpbutton.
+function helpbutton_Callback(hObject, eventdata, handles)
+% hObject    handle to helpbutton (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+if get(handles.helpbutton,'Value')
+    helpdlg({'1. Click on ''Select File''' '2. Browse the location of the data file and select it.' '3. Select any of the joint (only 1 at a time).' ...
+        '4. Select which type of plot you want. You can select any number of plots.' '5. Click on ''Generate Plots'' to get the graphs of the selected options.'...
+        '6. Repeat for any type of joint and any type of plots.'},'Steps');
+end

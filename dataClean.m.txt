@@ -1,0 +1,33 @@
+function [x,y,z] = dataClean(filename,pathname,currdir)
+
+cd(pathname);
+fid = fopen(filename);
+tline = fgets(fid);
+i = 0; j = 0;
+while ischar(tline)
+    i = i + 1;
+    temp1 = strrep(tline(17:end),'*',' ');
+    temp2 = strsplit(temp1,'          ');
+    line{i} = temp2(1:end-1);
+    if ~isempty(line{i})
+        temp3 = cell2mat(line{i}(2));
+        if temp3(1)=='X'
+            j = j + 1;
+            true_line{j} = line{i};
+        end
+    end
+    tline = fgets(fid);
+end
+cd(currdir);
+
+h = waitbar(0,'Please wait...Collecting data...');
+for i=1:length(true_line)
+    a = true_line{i};
+    for j=1:25
+        [x(i,j),y(i,j),z(i,j)] = strread(char(a(j)),'%*s %f %*s %f %*s %f','delimiter',':');
+    end
+    waitbar(i/length(true_line));
+end
+close(h);
+
+end

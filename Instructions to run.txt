@@ -1,0 +1,30 @@
+Kinect SDK skeletal tracking
+
+
+- Kinect SDK data is the folder on the desktop
+- copy the path and paste it in line 150 (to change the directory where it saves) in DIR string
+- add double \\ after paste it 
+- inside folder is file called Kinect Data
+- line 152 string called file is the file name  without the .txt (in case want to change it later)
+
+-Open visual studio 2015 (pinned to taskbar)
+-then open kinect joint tracking folder
+-Body basics WPF.sln
+to access code - go to solution explorer - open mainwindow.xaml  - that is where the code is
+-that's where you can add buttons and stuff to main window interface
+start
+click run
+start session 
+add marks
+
+
+- saved in data folder in KinectJointTracking
+- it will append to existing .txt file if you don't rename the file
+- need to add code to ask for particpant nubmer and save
+- 
+- - right now -before running it enter the ID in line 154 - add it into quotes and replace what is currently in the quotes 
+
+
+**to use on a different computer need to change the path name**
+
+- when you click start you see 'session in progress' in top left hand corner
